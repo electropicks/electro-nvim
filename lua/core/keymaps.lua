@@ -9,8 +9,7 @@ map("n", "<leader>w", "<cmd>w<cr>",   { desc = "Save file" })
 map("n", "<leader>q", "<cmd>q<cr>",   { desc = "Quit" })
 map("n", "<leader>Q", "<cmd>qa!<cr>", { desc = "Force quit all" })
 
--- Better escape
-map("i", "jk", "<Esc>", { desc = "Exit insert mode" })
+-- Better escape handled by better-escape.nvim (jk → <Esc>)
 
 -- Clear search highlights
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear highlights" })
@@ -69,3 +68,30 @@ end, { desc = "Format file (rustfmt)" })
 
 -- ─── Paste without overwriting register ───────────────────────────────────────
 map("x", "<leader>P", [["_dP]], { desc = "Paste without losing register" })
+
+-- ─── DAP (Debugger) ───────────────────────────────────────────────────────────
+map("n", "<leader>db", function() require("dap").toggle_breakpoint() end,                           { desc = "DAP: Toggle breakpoint" })
+map("n", "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Condition: ")) end,   { desc = "DAP: Conditional breakpoint" })
+map("n", "<leader>dc", function() require("dap").continue() end,                                    { desc = "DAP: Continue / Start" })
+map("n", "<leader>di", function() require("dap").step_into() end,                                   { desc = "DAP: Step into" })
+map("n", "<leader>do", function() require("dap").step_over() end,                                   { desc = "DAP: Step over" })
+map("n", "<leader>dO", function() require("dap").step_out() end,                                    { desc = "DAP: Step out" })
+map("n", "<leader>dr", function() require("dap").repl.open() end,                                   { desc = "DAP: Open REPL" })
+map("n", "<leader>dl", function() require("dap").run_last() end,                                    { desc = "DAP: Run last" })
+map("n", "<leader>du", function() require("dapui").toggle() end,                                    { desc = "DAP: Toggle UI" })
+map("n", "<leader>dx", function() require("dap").terminate() end,                                   { desc = "DAP: Terminate" })
+
+-- ─── Neotest (Test runner) ────────────────────────────────────────────────────
+map("n", "<leader>nt", function() require("neotest").run.run() end,                                 { desc = "Test: Run nearest" })
+map("n", "<leader>nT", function() require("neotest").run.run(vim.fn.expand("%")) end,               { desc = "Test: Run file" })
+map("n", "<leader>ns", function() require("neotest").summary.toggle() end,                          { desc = "Test: Toggle summary" })
+map("n", "<leader>no", function() require("neotest").output_panel.toggle() end,                     { desc = "Test: Toggle output" })
+map("n", "<leader>nd", function() require("neotest").run.run({ strategy = "dap" }) end,             { desc = "Test: Debug nearest" })
+
+-- ─── Session (persistence.nvim) ───────────────────────────────────────────────
+map("n", "<leader>qs", function() require("persistence").load() end,                                { desc = "Session: Restore for cwd" })
+map("n", "<leader>ql", function() require("persistence").load({ last = true }) end,                 { desc = "Session: Restore last" })
+map("n", "<leader>qd", function() require("persistence").stop() end,                                { desc = "Session: Stop (don't save)" })
+
+-- ─── Oil (filesystem buffer) ──────────────────────────────────────────────────
+map("n", "-", "<cmd>Oil<cr>", { desc = "Oil: Open parent dir" })

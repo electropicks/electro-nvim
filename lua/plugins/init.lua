@@ -96,7 +96,13 @@ require("lazy").setup({
     dependencies = { "williamboman/mason.nvim" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "rust_analyzer" },
+        ensure_installed = {
+          "rust_analyzer",
+          "lua_ls",
+          "jsonls",
+          "yamlls",
+          "bashls",
+        },
         automatic_installation = true,
       })
     end,
@@ -178,6 +184,116 @@ require("lazy").setup({
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     opts = {},
+  },
+
+  -- ── Debugger (DAP) ──────────────────────────────────────────────────
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+      {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+        opts = {
+          ensure_installed    = { "codelldb" },
+          automatic_installation = true,
+        },
+      },
+    },
+    config = function()
+      require("plugins.dap")
+    end,
+  },
+
+  -- ── Terminal ────────────────────────────────────────────────────────
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("plugins.terminal")
+    end,
+  },
+
+  -- ── Test runner ─────────────────────────────────────────────────────
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "rouge8/neotest-rust",
+    },
+    config = function()
+      require("plugins.neotest")
+    end,
+  },
+
+  -- ── Session management ──────────────────────────────────────────────
+  {
+    "folke/persistence.nvim",
+    event  = "BufReadPre",
+    config = function()
+      require("plugins.session")
+    end,
+  },
+
+  -- ── Better UI (cmdline, notifications, LSP progress) ────────────────
+  {
+    "folke/noice.nvim",
+    event        = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
+    config = function()
+      require("plugins.noice")
+    end,
+  },
+
+  -- ── Oil (filesystem as buffer) ──────────────────────────────────────
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("plugins.oil")
+    end,
+  },
+
+  -- ── Color previews ──────────────────────────────────────────────────
+  {
+    "NvChad/nvim-colorizer.lua",
+    event  = { "BufReadPre", "BufNewFile" },
+    opts   = {
+      filetypes = { "*" },
+      user_default_options = {
+        RGB      = true,
+        RRGGBB   = true,
+        names    = false,
+        RRGGBBAA = true,
+        rgb_fn   = true,
+        hsl_fn   = true,
+        css      = true,
+        css_fn   = true,
+        mode     = "background",
+      },
+    },
+  },
+
+  -- ── Better escape (fixes timing on jk) ─────────────────────────────
+  {
+    "max397574/better-escape.nvim",
+    event  = "InsertEnter",
+    config = function()
+      require("better_escape").setup({
+        timeout          = vim.o.timeoutlen,
+        default_mappings = false,
+        mappings = {
+          i = { j = { k = "<Esc>" } },
+          v = { j = { k = "<Esc>" } },
+          c = { j = { k = "<Esc>" } },
+        },
+      })
+    end,
   },
 }, {
   -- lazy.nvim options

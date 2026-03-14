@@ -139,6 +139,7 @@ require("lazy").setup({
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets",
+      "supermaven-inc/supermaven-nvim",
     },
     config = function()
       require("plugins.completion")
@@ -293,6 +294,27 @@ require("lazy").setup({
           c = { j = { k = "<Esc>" } },
         },
       })
+    end,
+  },
+  -- ── AI Tools ────────────────────────────────────────────────────────
+  {
+    "folke/snacks.nvim",  -- required by claudecode.nvim
+    priority = 1000,
+    lazy = false,
+    opts = {},
+  },
+  {
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    config = function()
+      require("plugins.claudecode")
+    end,
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "InsertEnter",
+    config = function()
+      require("plugins.supermaven")
     end,
   },
 }, {

@@ -95,3 +95,11 @@ map("n", "<leader>qd", function() require("persistence").stop() end,            
 
 -- ─── Oil (filesystem buffer) ──────────────────────────────────────────────────
 map("n", "-", "<cmd>Oil<cr>", { desc = "Oil: Open parent dir" })
+
+-- ─── Claude Code (claudecode.nvim) ────────────────────────────────────────────
+map("n", "<leader>cc", "<cmd>ClaudeCode<CR>",         { desc = "Claude: Toggle terminal" })
+map("n", "<leader>co", "<cmd>ClaudeCodeFocus<CR>",    { desc = "Claude: Focus terminal" })
+map({ "n", "v" }, "<leader>cs", "<cmd>ClaudeCodeSend<CR>", { desc = "Claude: Send to Claude" })
+map("n", "<leader>cA", "<cmd>ClaudeCodeDiffAccept<CR>", { desc = "Claude: Accept diff" })
+map("n", "<leader>cd", "<cmd>ClaudeCodeDiffDeny<CR>",   { desc = "Claude: Deny diff" })
+map("n", "<leader>ct", "<cmd>ClaudeCodeTreeAdd<CR>",    { desc = "Claude: Add file to context" })

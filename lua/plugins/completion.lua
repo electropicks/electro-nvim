@@ -39,6 +39,7 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
+    { name = "supermaven" },
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "crates" },   -- Cargo.toml crate versions
@@ -49,6 +50,7 @@ cmp.setup({
   formatting = {
     format = function(entry, item)
       local icons = {
+        supermaven = "[AI]",
         nvim_lsp = "[LSP]",
         luasnip  = "[Snip]",
         buffer   = "[Buf]",
